@@ -1,0 +1,5 @@
+<library path="libwait_bt_plugin">
+  <class type="WaitAction" base_class_type="BT::ActionNode">
+    <description>Custom Wait BT Node</description>
+  </class>
+</library>

@@ -1,0 +1,37 @@
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+
+    <!-- Wait for external info (e.g., /start flag) -->
+    <Sequence name="WaitForStart">
+      <WaitForTick />
+      <Wait wait_duration="1.0"/>
+      <CheckStartInfo />
+    </Sequence>
+
+    <!-- Move to goal -->
+    <Sequence name="GoToGoal">
+      <NavigateToPose goal="{goal_pose}" />
+    </Sequence>
+
+    <!-- Decision: cone or no cone -->
+    <Fallback name="CheckCone">
+      <Inverter>
+        <ConeInSight />
+      </Inverter>
+      <Sequence name="DoSweepAndReturn">
+        
+        <!-- Sweep motion 3 times -->
+        <Repeat num_cycles="3">
+          <Sequence>
+            <Spin angle="45" />
+            <Spin angle="-45" />
+          </Sequence>
+        </Repeat>
+
+        <!-- Return to initial position -->
+        <NavigateToPose goal="{spawn_pose}" />
+      </Sequence>
+    </Fallback>
+
+  </BehaviorTree>
+</root>
