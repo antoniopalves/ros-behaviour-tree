@@ -32,7 +32,6 @@
         </ReactiveFallback>
 
       </RecoveryNode>
-
       <!-- ESTA PARTE É QUE GARANTE EXECUÇÃO APÓS SUCESSO -->
       <Spin spin_dist="3.14159"/>
 

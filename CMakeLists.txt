@@ -14,29 +14,49 @@ find_package(nav2_behavior_tree REQUIRED)
 find_package(nav2_msgs REQUIRED)
 find_package(pluginlib REQUIRED)
 find_package(ament_cmake_python REQUIRED)
+find_package(nav2_bt_navigator REQUIRED)
+
 
 ############################################################
-# NÃO TENS QUALQUER PLUGIN C++ ATUALMENTE
-# Logo, NÃO deve haver add_library nem ament_target_dependencies
-# Nem pluginlib_export_plugin_description_file
+# PLUGIN C++
 ############################################################
+add_library(cone_in_sight_bt_node SHARED
+  src/cone_in_sight.cpp
+)
 
-# REMOVEI COMPLETAMENTE:
-# - add_library(wait_action_bt_node ...)
-# - ament_target_dependencies(wait_action_bt_node ...)
-# - pluginlib_export_plugin_description_file(...)
-# - install(TARGETS wait_action_bt_node ...)
+ament_target_dependencies(cone_in_sight_bt_node
+  rclcpp
+  behaviortree_cpp_v3
+  std_msgs
+)
+
+# <<< ESTA LINHA ERA O QUE FALTAVA
+target_include_directories(cone_in_sight_bt_node PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>
+)
+# >>>
+
+pluginlib_export_plugin_description_file(
+  behaviortree_cpp_v3
+  resource/bt_plugin.xml
+)
+
+install(
+  TARGETS cone_in_sight_bt_node
+  LIBRARY DESTINATION lib
+)
 
 ############################################################
-# PYTHON NODE (init_pose_publisher.py)
+# PYTHON NODES
 ############################################################
 ament_python_install_package(${PROJECT_NAME})
 
 install(
   PROGRAMS
     trsa_bt_plugins/init_pose_publisher.py
+    trsa_bt_plugins/cone_detector.py
   DESTINATION lib/${PROJECT_NAME}
-  RENAME init_pose_publisher
 )
 
 ############################################################
@@ -49,11 +69,6 @@ install(
 
 install(
   DIRECTORY config
-  DESTINATION share/${PROJECT_NAME}
-)
-
-install(
-  FILES resource/bt_plugin.xml
   DESTINATION share/${PROJECT_NAME}
 )
 
