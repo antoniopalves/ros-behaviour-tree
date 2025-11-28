@@ -12,8 +12,8 @@ Terminal 1
 ```bash
 ros2 launch nav2_bringup tb3_simulation_launch.py \
   headless:=False \
-  params_file:=/home/antoniopalves/ros2_ws/src/ros-behaviour-tree/trsa_bt_plugins/config/nav2_params.yaml \
-  world:=/home/antoniopalves/ros2_ws/src/ros-behaviour-tree/trsa_bt_plugins/worlds/trsa_tb3_cone.world
+  params_file:=/home/antoniopalves/ros2_ws/src/trsa_bt_plugins/config/nav2_params.yaml \
+  world:=/home/antoniopalves/ros2_ws/src/trsa_bt_plugins/worlds/trsa_tb3_cone.world
 ```
 Terminal 2
 
