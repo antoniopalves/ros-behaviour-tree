@@ -1,4 +1,4 @@
-## 1.Build
+## 1. Build
 
 ```bash
 cd ~/ros2_ws
@@ -6,7 +6,7 @@ colcon build --packages-select trsa_bt_plugins
 source install/setup.bash
 ```
 
-## 2.Run 
+## 2. Run 
 Terminal 1
 
 ```bash
